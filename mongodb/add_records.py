@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import json
 
 
-with open("sample.json") as f:
+with open("../sample.json") as f:
     users = [x for x in json.load(f)]
 
 client = MongoClient()
