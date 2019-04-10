@@ -8,5 +8,4 @@ with open("../sample.json") as f:
 r = redis.Redis(host="localhost", port=6379, db=0)
 
 for idx, user in enumerate(users):
-    for key in user.keys():
-        r.set(f"users:{idx}:{key}", user[key])
+    r.hmset(f"users:{idx}", user)
