@@ -4,7 +4,7 @@ import datetime
 
 
 with open("../sample.json") as f:
-    users = [x for x in json.load(f)]
+    users = json.load(f)
 
 for user in users:
     user["date_of_birth"] = datetime.datetime.strptime(
