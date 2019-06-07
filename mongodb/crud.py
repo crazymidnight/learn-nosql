@@ -1,12 +1,15 @@
 from pymongo import MongoClient
 import pprint
+import datetime
 
 client = MongoClient()
 
 db = client.phonebook
 
-# Create
+db.records.delete_one({"phone": "+23 111 230 4214"})
 
+# Create
+print("CREATE:")
 db.records.insert_one(
     {
         "first_name": "Harry",
@@ -16,7 +19,8 @@ db.records.insert_one(
         "workplace": "Ministry of Magic",
         "university": "Hogwarts",
         "hobby": "Magic",
-        "date_of_birth": "31-09-1980",
+        "date_of_birth": datetime.datetime.strptime("23/09/1980", "%d/%m/%Y"),
+        "phone": "+23 111 230 4214",
     }
 )
 
@@ -26,12 +30,13 @@ for i in cursor:
 
 # Read
 
-cursor = db.records.find({"gender": "Male"})
+cursor = db.records.find({"phone": "+55 975 220 3198"})
+print("READ:")
 for i in cursor:
     pprint.pprint(i)
 
 # Update
-
+print("UPDATE:")
 db.records.update_one(
     {"last_name": "Potter"}, {"$set": {"email": "harry@ministry.com"}}
 )
@@ -41,9 +46,9 @@ for i in cursor:
     pprint.pprint(i)
 
 # Delete
+print("DELETE:")
+db.records.delete_one({"university": "+23 111 230 4214"})
 
-db.records.delete_one({"hobby": "JVM"})
-
-cursor = db.records.find({"last_name": "JVM"})
+cursor = db.records.find({"phone": "Hogwarts"})
 for i in cursor:
     pprint.pprint(i)
