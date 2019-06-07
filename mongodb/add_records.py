@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING, TEXT, IndexModel
 import json
 import datetime
 
@@ -16,5 +16,16 @@ client = MongoClient()
 db = client.phonebook
 
 db.records.remove()
+db.records.drop_indexes()
 
 db.records.insert_many(users)
+
+index_name = IndexModel(
+    [("first_name", TEXT), ("last_name", TEXT)], name="search_by_name"
+)
+
+index_phone = IndexModel([("phone", ASCENDING)], name="by_phone", unique=True)
+
+db.records.create_indexes([index_name, index_phone])
+
+print(sorted(list(db.records.index_information())))
