@@ -69,7 +69,7 @@ pipeline = [
 cursor = list(db.plays.aggregate(pipeline))
 
 pprint(cursor)
-exit()
+
 """
 A list of characters for each play, sorted
 alphabetically.
